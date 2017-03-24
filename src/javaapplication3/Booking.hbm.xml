@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-Mar-2017 19:35:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="javaapplication3.Booking" table="booking" catalog="spherebooking" optimistic-lock="version">
+        <id name="bookingId" type="int">
+            <column name="BookingID" />
+            <generator class="assigned" />
+        </id>
+        <property name="customerId" type="java.lang.Integer">
+            <column name="CustomerID" />
+        </property>
+        <property name="sessionId" type="java.lang.Integer">
+            <column name="SessionID" />
+        </property>
+        <property name="sessionType" type="java.lang.Integer">
+            <column name="SessionType" />
+        </property>
+    </class>
+</hibernate-mapping>

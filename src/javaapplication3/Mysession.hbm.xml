@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-Mar-2017 19:35:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="javaapplication3.Mysession" table="mysession" catalog="spherebooking" optimistic-lock="version">
+        <id name="sessionId" type="int">
+            <column name="SessionID" />
+            <generator class="assigned" />
+        </id>
+        <property name="date" type="date">
+            <column name="Date" length="10" />
+        </property>
+        <property name="startTime" type="time">
+            <column name="StartTime" length="8" />
+        </property>
+        <property name="endTime" type="time">
+            <column name="EndTime" length="8" />
+        </property>
+    </class>
+</hibernate-mapping>
