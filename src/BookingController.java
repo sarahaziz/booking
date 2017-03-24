@@ -35,15 +35,17 @@ public class BookingController {
     private static ServiceRegistry registry;
     private static Configuration configuration;
     //private List<Booking> bookinglist;
-    
-    public BookingController()
+    private static BookingController instance = new BookingController();
+    private BookingController()
     {
         configuration = new Configuration().configure();
         registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         factory = configuration.buildSessionFactory(registry);        
     }
     
-    
+    public static BookingController getInstance(){
+      return instance;
+   }
     
     public int MakeBooking(int custid,int sessiontype,int sessionid)
     {

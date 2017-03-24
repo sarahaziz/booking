@@ -20,7 +20,7 @@ public class SlopeOperatorUI {
 	private BookingController control;
 
     public SlopeOperatorUI() {
-        control=new BookingController();
+        control=BookingController.getInstance();
     }
         
         
