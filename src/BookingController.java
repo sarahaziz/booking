@@ -37,7 +37,7 @@ public class BookingController {
     private static ServiceRegistry registry;
     // to get physical connection to database
     private static SessionFactory factory;
-    
+    private Booking newbooking;
     
     //private List<Booking> bookinglist;
     private static BookingController instance = new BookingController();
@@ -60,7 +60,7 @@ public class BookingController {
         int newid=0;
         try 
         {
-            Booking newbooking= new Booking(); 
+            newbooking= new Booking(); 
             newbooking.setBookingId(GetMaxBookingId());
             newbooking.setCustomerId(custid); 
             newbooking.setSessionType(sessiontype);
@@ -77,7 +77,7 @@ public class BookingController {
         return newid;
     }
     
-    public Integer GetMaxBookingId()
+    private Integer GetMaxBookingId()
     {
         Session session = factory.openSession();
         Transaction tx = null;        
