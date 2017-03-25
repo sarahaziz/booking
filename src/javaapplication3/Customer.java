@@ -1,6 +1,9 @@
 package javaapplication3;
 // Generated 12-Mar-2017 19:35:24 by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -11,6 +14,7 @@ public class Customer  implements java.io.Serializable {
 
      private int customerId;
      private String name;
+     private Date dob;
 
     public Customer() {
     }
@@ -37,6 +41,13 @@ public class Customer  implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+    public Date getdob() {
+        return this.dob;
+    }
+    
+    public void setdob(Date dob) {
+        this.dob = dob;
     }
 
 

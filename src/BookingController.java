@@ -13,6 +13,7 @@
 
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,15 +32,22 @@ import org.hibernate.service.ServiceRegistry;
 
 public class BookingController {
 
-    private static SessionFactory factory;
-    private static ServiceRegistry registry;
+    // thid id got hibrtnstr  eill hsvr mspping informstion sbout our classes snd database tables
     private static Configuration configuration;
+    private static ServiceRegistry registry;
+    // to get physical connection to database
+    private static SessionFactory factory;
+    
+    
     //private List<Booking> bookinglist;
     private static BookingController instance = new BookingController();
     private BookingController()
     {
+        // load mapping configuration file.
         configuration = new Configuration().configure();
-        registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        registry = new StandardServiceRegistryBuilder().applySettings(
+                configuration.getProperties()).build();
+        // Get physical connection
         factory = configuration.buildSessionFactory(registry);        
     }
     
@@ -57,6 +65,7 @@ public class BookingController {
             newbooking.setCustomerId(custid); 
             newbooking.setSessionType(sessiontype);
             Session session = factory.openSession();
+            // thid is  
             Transaction tx = session.beginTransaction();            
             newid=( Integer )session.save(newbooking);
             tx.commit();
@@ -135,31 +144,34 @@ public class BookingController {
         }                
     }
 	
-    public String viewCustomer(int custid) 
+    public List<Customer> viewCustomer(int custid,String dob) 
     {
-        String custname="";            
+        List custlist=null;                    
         Session session = factory.openSession();
         Transaction tx = null;
         try
         {
             tx = session.beginTransaction();
-            String sql = "SELECT * FROM customer where customerid="+custid;
-            SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Customer.class);
-            List employees = query.list();                            
-            if(employees.size()==1)
+            String sql="";
+            if(custid>0)
             {
-                for (Iterator iterator1 = employees.iterator(); iterator1.hasNext();)
+                sql = "SELECT * FROM customer where customerid="+custid;
+            }
+            else if(!dob.isEmpty())
+            {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date tempdob=df.parse(dob);
+                if(tempdob!=null)
                 {
-                    Customer cust = (Customer) iterator1.next();
-                    custname=cust.getName();
-                    System.out.print("Name: " + cust.getName()); 
+                    sql = "SELECT * FROM customer where dob='"+df.format(tempdob)+"'";
+                    
                 }
             }
-            else
-            {
-                custname="No record found";
-            }
+                    
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Customer.class);
+            custlist = query.list();
+            
             tx.commit();
         }
         catch (HibernateException e) 
@@ -167,11 +179,16 @@ public class BookingController {
           if (tx!=null) tx.rollback();
           e.printStackTrace(); 
         }
+        catch(ParseException e)
+        {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
         finally 
         {
           session.close(); 
         }
-        return custname;
+        return custlist;
     }
     /*public void CalculatePayment(Booking bookinginfo) {
 

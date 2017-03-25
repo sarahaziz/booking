@@ -16,8 +16,8 @@ import java.util.List;
 
 
 
-public class SlopeOperatorUI {
-	private BookingController control;
+/*public class SlopeOperatorUI {
+	
 
     public SlopeOperatorUI() {
         control=BookingController.getInstance();
@@ -36,4 +36,4 @@ public class SlopeOperatorUI {
         {
             return control.viewSchedule();
         }
-}
+}*/
